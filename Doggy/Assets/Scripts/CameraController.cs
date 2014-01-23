@@ -5,15 +5,24 @@ public class CameraController : MonoBehaviour {
 	
 	public	static	CameraController	Instance = null;
 	
-	public	PlayerController		m_Player;
+	public	PlayerController		m_Player;	
+	public 	float					m_xPlayerOffset;
 	
-	public 	Vector3			m_Offset;
+	public	float					m_MiddleYPosition = 30f;
+	public	float					m_StartZPosition = -50f;
+	public	float					m_ZExtend = 20f;
+	public	float					m_ZMoveEasing = 0.9f;
 	
-	private	bool			m_StartCamera = false;
-	
-	public void	StartCamera()
+	private	bool					m_StopCamera = false;
+		
+	public	void			StopCamera()
 	{
-		m_StartCamera = true;
+		m_StopCamera = true;
+	}
+	
+	public	void			StartCamera()
+	{
+		m_StopCamera = false;
 	}
 	
 	void Awake()
@@ -32,13 +41,30 @@ public class CameraController : MonoBehaviour {
 		Camera.main.transparencySortMode = TransparencySortMode.Orthographic;
 	}
 	
-	void Update () {
+	void FixedUpdate () 
+	{		
+		if(m_StopCamera)
+			return;
 		
-		if(m_StartCamera)
-		{
-			float xTranslate = m_Player.transform.position.x + m_Offset.x;
-			float zTranslate = (16f - m_Player.transform.position.y) * 0.1f;
-			iTween.MoveUpdate(gameObject, iTween.Hash("x", xTranslate, "z", zTranslate - 20f, "time", 3.0f));
-		}
+		Vector3 distanceRemaining = transform.position - m_Player.transform.position;		
+					
+		Vector3 position = transform.position;
+	
+		if(distanceRemaining.x - m_xPlayerOffset < 0f)
+		{		
+			float deltaX = m_xPlayerOffset - distanceRemaining.x;
+			position.x += deltaX;
+		}	
+		
+//		position.y -= distanceRemaining.y * m_ZMoveEasing;
+	
+		float deltaZ = (m_Player.transform.position.y - m_MiddleYPosition) / m_MiddleYPosition;
+		
+		deltaZ *= m_ZMoveEasing;
+		deltaZ += 0.5f;
+		
+		position.z = Mathf.Lerp(m_StartZPosition + m_ZExtend, m_StartZPosition - m_ZExtend, deltaZ);	
+		
+		transform.position = position;		
 	}
 }
