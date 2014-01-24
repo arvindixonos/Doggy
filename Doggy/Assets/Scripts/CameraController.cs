@@ -7,11 +7,10 @@ public class CameraController : MonoBehaviour {
 	
 	public	PlayerController		m_Player;	
 	public 	float					m_xPlayerOffset;
-	
 	public	float					m_MiddleYPosition = 30f;
 	public	float					m_StartZPosition = -50f;
 	public	float					m_ZExtend = 20f;
-	public	float					m_ZMoveEasing = 0.9f;
+	public	float					m_ZMoveSpeed = 10f;
 	
 	private	bool					m_StopCamera = false;
 		
@@ -50,21 +49,27 @@ public class CameraController : MonoBehaviour {
 					
 		Vector3 position = transform.position;
 	
-		if(distanceRemaining.x - m_xPlayerOffset < 0f)
+		float deltaX = distanceRemaining.x - m_xPlayerOffset;
+	
+		if(deltaX < 0f)
 		{		
-			float deltaX = m_xPlayerOffset - distanceRemaining.x;
-			position.x += deltaX;
+			position.x -= deltaX;
 		}	
 		
-		position.y -= distanceRemaining.y * m_ZMoveEasing;
-	
-		float deltaZ = (m_Player.transform.position.y - m_MiddleYPosition) / m_MiddleYPosition;
+		if(!m_Player.isJumping())
+		{	
+			float deltaY = Mathf.Abs((m_Player.transform.position.y - m_MiddleYPosition ) / m_MiddleYPosition);	
+			deltaY = Mathf.Clamp01(deltaY);		
+				
+			float distanceZ = Mathf.Lerp(m_StartZPosition, m_StartZPosition - m_ZExtend, deltaY);								
+			distanceZ = distanceZ - transform.position.z;
+			
+			if(Mathf.Abs(distanceZ) > m_ZMoveSpeed)
+				distanceZ = m_ZMoveSpeed * Mathf.Sign(distanceZ);
+			
+			position.z += distanceZ;
+		}
 		
-		deltaZ *= m_ZMoveEasing;
-		deltaZ += 0.5f;
-		
-		position.z = Mathf.Lerp(m_StartZPosition + m_ZExtend, m_StartZPosition - m_ZExtend, deltaZ);	
-		
-		transform.position = position;		
+		transform.position = position;
 	}
 }

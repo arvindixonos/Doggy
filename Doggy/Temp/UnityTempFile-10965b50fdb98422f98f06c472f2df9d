@@ -6,6 +6,7 @@
 -r:'/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll'
 -r:'Library/ScriptAssemblies/Assembly-CSharp.dll'
 -r:'Library/ScriptAssemblies/Assembly-UnityScript.dll'
+-r:'Assets/zlib.net.dll'
 -r:'Assets/TK2DROOT/tk2d/Editor/tk2dExternal.dll'
 -r:'Assets/TK2DROOT/tk2d/Editor/tk2dSkin.dll'
 -r:'/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.Graphs.dll'

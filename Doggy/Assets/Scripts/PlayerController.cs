@@ -19,6 +19,11 @@ public class PlayerController : MonoBehaviour {
 	public		float			m_JumpHeight = 30f;
 	public		float			m_JumpMultiplier = 0.03f;
 	
+	public		bool			isJumping()
+	{
+		return m_Jumping;
+	}
+	
 	public void OnTriggerEnter(Collider other)
 	{
 

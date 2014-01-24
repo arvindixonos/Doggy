@@ -151,6 +151,9 @@
      <None Include="Assets\ShurikenMagic\Shaders\SM_2sided_transparent.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\AdditiveVertexColor.shader" />
      <None Include="Assets\ShurikenMagic\Shaders\SM_TransparentRim.shader" />
+ <Reference Include="Assets\zlib.net">
+ <HintPath>Assets\zlib.net.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
