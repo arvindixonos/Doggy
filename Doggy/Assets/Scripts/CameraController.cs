@@ -56,7 +56,7 @@ public class CameraController : MonoBehaviour {
 			position.x += deltaX;
 		}	
 		
-//		position.y -= distanceRemaining.y * m_ZMoveEasing;
+		position.y -= distanceRemaining.y * m_ZMoveEasing;
 	
 		float deltaZ = (m_Player.transform.position.y - m_MiddleYPosition) / m_MiddleYPosition;
 		

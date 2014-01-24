@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
 	private		Vector3			m_JumpEndPos = Vector3.zero;
 	private		bool			m_Jumping = false;
 	private		float			m_JumpTimer = 0f;
+	private		Vector3			m_PrevPosition = Vector3.zero;
 	
 	public		bool			m_DoubleJumpOn = true;
 	private		bool			m_DoubleJumped = false;
@@ -16,13 +17,11 @@ public class PlayerController : MonoBehaviour {
 	public		float			m_FallDownCurve = -5f;
 	public		float			m_JumpDistance = 25f;
 	public		float			m_JumpHeight = 30f;
+	public		float			m_JumpMultiplier = 0.03f;
 	
 	public void OnTriggerEnter(Collider other)
 	{
-		if(m_Jumping && m_JumpTimer > 0.5f)
-		{
-			collider.isTrigger = false;	
-		}
+
 	}
 	
 	public void OnCollisionEnter(Collision collision)
@@ -51,7 +50,7 @@ public class PlayerController : MonoBehaviour {
 	Vector3 BezierJump(float t)
 	{
 		Vector3 position = Vector3.zero;
-		Vector3 height = m_JumpStartPos + (m_JumpEndPos - m_JumpStartPos) / 2f;
+		Vector3 height = (m_JumpStartPos + m_JumpEndPos) / 2f;
 		height.y += m_JumpHeight;
 			
 		position = (1f - t) * (1f - t) * m_JumpStartPos + 2 * t * (1f - t) * height + t * t * m_JumpEndPos;
@@ -62,48 +61,64 @@ public class PlayerController : MonoBehaviour {
 	void FixedUpdate () 
 	{			
 		if(m_Jumping)
-		{
-			m_JumpTimer += Time.fixedDeltaTime;
-			Vector3 position = BezierJump(m_JumpTimer);
+		{				
+			m_JumpTimer += m_MoveSpeed * Time.fixedDeltaTime * m_JumpMultiplier;		
 			
-			if(m_JumpTimer > 0.5f)
-			{
-				Vector3 movementThisStep = position - transform.position; 
-				RaycastHit hitInfo;  
-	      		if (Physics.Raycast(transform.position, movementThisStep, out hitInfo, 1f, ~(1<<gameObject.layer))) 
-				{
-					Landed();
-	   				return;
-				}
+			if((m_JumpTimer < 0.3f) || (m_JumpTimer < 0.5f && isTouching()))
+			{				
+				Vector3 position = BezierJump(m_JumpTimer);
+				
+				transform.position = position;										
 			}
-
-			transform.position = position;										
+			else
+			{
+				Run();
+			}
 		}
 		else
 		{
-			float xTranslate = m_MoveSpeed * Time.fixedDeltaTime;
-			float yTranslate = m_FallDownCurve * Time.fixedDeltaTime;
-		
-			transform.Translate(xTranslate, yTranslate, 0f);	
+			Run();
 		}
-
-#if UNITY_EDITOR
-   		if(Input.GetKeyDown(KeyCode.Space))
-		{	
+				
+		Vector3 movementThisStep = transform.position - m_PrevPosition; 
+		RaycastHit hitInfo;  
+  		if (Physics.Raycast(transform.position, movementThisStep, out hitInfo, 1f, ~(1<<gameObject.layer))) 
+		{
+			if(m_Jumping)	
+				Landed();
+		}
+		
+		if(isTouching())
+		{
 			Touching();
+		}		
+		
+		m_PrevPosition = transform.position;
+	}
+	
+	void Run()
+	{
+		float xTranslate = m_MoveSpeed * Time.fixedDeltaTime;
+		float yTranslate = m_FallDownCurve * Time.fixedDeltaTime;
+		
+		transform.Translate(xTranslate, yTranslate, 0f);
+	}
+	
+	bool isTouching()
+	{
+#if UNITY_EDITOR
+   		if(Input.GetKey(KeyCode.Space))
+		{	
+			return true;
 		}
 #else
 		if(Input.touchCount > 0)
 		{
-    		Touch touch = Input.GetTouch(0);
-			
-			if(touch.phase == TouchPhase.Began)
-			{	
-				Touching();
-			}
+			return true;
 		}
-#endif		
+#endif	
 		
+		return false;
 	}
 	
 	void Touching()
