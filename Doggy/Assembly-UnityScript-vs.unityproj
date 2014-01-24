@@ -68,12 +68,10 @@
      <None Include="Assets\Cartoon FX\CartoonFX2 Releases Notes.txt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitPremulVertexColor.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\PremulVertexColor.shader" />
-     <None Include="Assets\TK2DROOT\tk2d_demo\Credits.txt" />
      <None Include="Assets\Textures\OrthelloXML.xml" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\goodies\PackedTextMesh.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\Blend2TexVertexColor.shader" />
      <None Include="Assets\TK2DROOT\tk2dUI\Shaders\DepthMaskSolid.shader" />
-     <None Include="Assets\TK2DROOT\tk2dUI_demo\Assets\Dark\Fonts\Nunito24.fnt" />
      <None Include="Assets\Cartoon FX\Shaders\CFX2 Particle Alpha Blend Add.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\resources\BlendVertexColor.shader" />
      <None Include="Assets\iTween\ReadMe!\ReadMe!.txt" />
@@ -81,20 +79,12 @@
      <None Include="Assets\TK2DROOT\tk2d\Editor\EditorUtility.shader" />
      <None Include="Assets\Cartoon FX\Demo\Assets\CFX_Demo_WaterWiggle.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\CutoutVertexColor.shader" />
-     <None Include="Assets\TK2DROOT\tk2d_demo\demobmfont\test.fnt" />
-     <None Include="Assets\TK2DROOT\tk2dUI_demo\Assets\Font\OldSansBlack\OldSansBlack.fnt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitBlendVertexColor.shader" />
      <None Include="Assets\Cartoon FX\Shaders\CFX2 Particle Alpha Blend Tint.shader" />
-     <None Include="Assets\TK2DROOT\tk2dUI_demo\Assets\Dark\Fonts\Nunito16.fnt" />
-     <None Include="Assets\TK2DROOT\tk2dUI_demo\Assets\Dark\Fonts\Nunito32.fnt" />
      <None Include="Assets\Cartoon FX\CartoonFX2 Readme.txt" />
      <None Include="Assets\ShurikenMagic\Shaders\SM_2sided_transparent.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\AdditiveVertexColor.shader" />
      <None Include="Assets\ShurikenMagic\Shaders\SM_TransparentRim.shader" />
-     <None Include="Assets\TK2DROOT\tk2d_demo\democameradata\source\democamerafont.fnt" />
- <Reference Include="Assets\zlib.net">
- <HintPath>Assets\zlib.net.dll</HintPath>
- </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
